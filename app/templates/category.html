@@ -1,0 +1,15 @@
+{% extends 'base.html'%} {% import 'macros.html' as macro %} {%block styles%} {{
+    super() }}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/styles.css')}}" />
+    {%endblock%} 
+    
+    
+    {% block content %}
+    
+    <div class="container">
+      <h2 class="text-center" id="posts">{{category_name}} Pitches</h2>
+      
+          {{ macro.display(category) }}
+    </div>
+    {% endblock%}
+    
