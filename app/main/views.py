@@ -21,3 +21,18 @@ def category(category_name):
     category = Blog.query.filter_by(category=category_name).all() 
     title=f'{category_name} Pitches'
     return render_template('category.html', category = category, title=title, category_name=category_name)
+
+@main.route('/blogpost', methods = ['POST','GET'])
+@login_required
+def new_blog():
+    form = BlogForm()
+    if form.validate_on_submit():
+        title = form.title.data
+        post = form.post.data
+        category = form.category.data
+        user_id = current_user
+        new_pitch_object = Blog(post=post,user_id=current_user._get_current_object().id,category=category,title=title)
+        new_pitch_object.save_p()
+        return redirect(url_for('main.index'))
+        
+    return render_template('new_blog.html', form = form)
