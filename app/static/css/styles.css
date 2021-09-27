@@ -80,12 +80,9 @@ body {
 }
 
 .btn-default {
-  background: #63c342;
-  color: white;
+  background: #c2b8b2;
+  color: black;
   border: none;
-  width: 40%;
-  margin: 20px auto 0 auto;
-  font-size: 1.2rem;
 }
 
 label {
