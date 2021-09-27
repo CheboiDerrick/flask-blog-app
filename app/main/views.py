@@ -4,19 +4,18 @@ from flask_login import login_required,current_user
 from ..models import User,Blog,Comment,Upvote,Downvote
 from .forms import UpdateProfile,BlogForm,CommentForm
 from .. import db,photos
+from sqlalchemy import desc
+import markdown2
 
 
 @main.route('/')
 def index():
-    blogs = Blog.query.all()
+    blogs = Blog.query.order_by(desc(Blog.time)).all()
     categories = Blog.query.with_entities(Blog.category)
     categories = [r for (r,) in categories]
-    technology = Blog.query.filter_by(category="Technology").all() 
-    print(technology)
-    health = Blog.query.filter_by(category = 'Health').all()
-    education = Blog.query.filter_by(category = 'Education').all()
+    
     title='Blogs | Home'
-    return render_template('index.html', education = education,technology = technology, blogs = blogs, health=health, categories=categories, title=title)
+    return render_template('index.html', blogs = blogs, categories=categories, title=title)
 
 @main.route('/blogs/<category_name>')
 def category(category_name):
@@ -26,7 +25,7 @@ def category(category_name):
     title=f'{category_name}'
     return render_template('category.html', category = category, title=title, categories=categories, category_name=category_name)
 
-@main.route('/blogpost', methods = ['POST','GET'])
+@main.route('/new/blogpost', methods = ['POST','GET'])
 @login_required
 def new_blog():
     form = BlogForm()
@@ -91,17 +90,21 @@ def updateprofile(name):
 @main.route('/user/<name>/update/pic',methods= ['POST'])
 @login_required
 def update_pic(name):
+    categories = Blog.query.with_entities(Blog.category)
+    categories = [r for (r,) in categories]
     user = User.query.filter_by(username = name).first()
     if 'photo' in request.files:
         filename = photos.save(request.files['photo'])
         path = f'photos/{filename}'
         user.profile_pic_path = path
         db.session.commit()
-    return redirect(url_for('main.profile',name=name))
+    return redirect(url_for('main.profile',name=name, categories=categories))
 
 @main.route('/like/<int:id>',methods = ['POST','GET'])
 @login_required
 def like(id):
+    categories = Blog.query.with_entities(Blog.category)
+    categories = [r for (r,) in categories]
     get_blogs = Upvote.get_upvotes(id)
     valid_string = f'{current_user.id}:{id}'
     for blog in get_blogs:
@@ -111,13 +114,15 @@ def like(id):
             return redirect(url_for('main.index',id=id))
         else:
             continue
-    new_vote = Upvote(user = current_user, blog_id=id)
+    new_vote = Upvote(user = current_user, blog_id=id, categories=categories)
     new_vote.save()
     return redirect(url_for('main.index',id=id))
 
 @main.route('/dislike/<int:id>',methods = ['POST','GET'])
 @login_required
 def dislike(id):
+    categories = Blog.query.with_entities(Blog.category)
+    categories = [r for (r,) in categories]
     blog = Downvote.get_downvotes(id)
     valid_string = f'{current_user.id}:{id}'
     for p in blog:
@@ -127,6 +132,6 @@ def dislike(id):
             return redirect(url_for('main.index',id=id))
         else:
             continue
-    new_downvote = Downvote(user = current_user, blog_id=id)
+    new_downvote = Downvote(user = current_user, blog_id=id, categories=categories)
     new_downvote.save()
     return redirect(url_for('main.index',id = id))
