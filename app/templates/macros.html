@@ -1,0 +1,60 @@
+{% macro display(blogs) %}
+<div class="container-fluid">
+  <div class="row">
+    {% if blogs %} {% for category in blogs %}
+    <div class="col-md-4">
+      <div class="card mb-3">
+        <h5 class="card-header text-center">{{category.title}}</h5>
+        <div class="card-body">
+          <p>{{category.post}}</p>
+          <hr>
+          <p class="text-center">Category: {{category.category}}</p>
+          <hr>
+          <footer class="blockquote-footer text-center mt-1">
+            Posted by: {{category.user.username}}
+          </footer>
+          <hr>
+          <div>
+            <span class="foot me-5">{{category.comment.count()}} Comments</span>
+            <span class="foot me-2">
+              <a href="{{url_for('main.like',id = category.id)}}"
+                ><i class="fa fa-gratipay"
+                  style="font-size: 18px; color:#63C342"
+                ></i
+              ></a>
+              {{category.upvote.count()}}</span
+            >
+
+            <span class="foot">
+                <a href="{{url_for('main.dislike',id = category.id)}}"
+                  ><i class="fa fa-thumbs-down"
+                    style="font-size: 18px; color:#63C342"
+                  ></i
+                ></a>
+                {{category.downvote.count()}}</span
+              >
+          </div>
+          <hr>
+          <div class="text-center">
+            <a
+            href="{{url_for('main.comment',pitch_id = category.id)}}"
+            class="btn btn-info"
+          >
+            Add Comment</a
+          >
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    {% endfor %} {% else %}
+    <div class="card w-90 mb-3">
+      <div class="card-body">
+        <p class="card-title">Category Has 0 posts</p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endmacro %}
