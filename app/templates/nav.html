@@ -1,4 +1,4 @@
-
+{% import 'macros.html' as macro %} 
 <nav class="navbar navbar-expand-lg mb-3">
     <div class="container-fluid">
       <a class="navbar-brand" href="{{url_for('main.index')}}"><strong>Flash Pitch</strong></a>
@@ -15,9 +15,7 @@
                       Categories
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="/pitches/Technology">Technology</a></li>
-                      <li><a class="dropdown-item" href="/pitches/Health">Health</a></li>
-                      <li><a class="dropdown-item" href="/pitches/Education">Education</a></li>
+                        {{ macro.display_categories(categories) }}
                     </ul>
                   </li>
                 {% if current_user.is_authenticated %}

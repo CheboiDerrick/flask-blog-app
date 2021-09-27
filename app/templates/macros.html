@@ -37,7 +37,7 @@
           <hr>
           <div class="text-center">
             <a
-            href="{{url_for('main.comment',pitch_id = category.id)}}"
+            href="{{url_for('main.comment',blog_id = category.id)}}"
             class="btn btn-info"
           >
             Add Comment</a
@@ -57,4 +57,10 @@
     {% endif %}
   </div>
 </div>
+{% endmacro %}
+
+{% macro display_categories(categories) %}
+{% for category in categories %}
+   <li><a class="dropdown-item" href="/blogs/{{category}}">{{category}}</a></li>
+{% endfor %} 
 {% endmacro %}
