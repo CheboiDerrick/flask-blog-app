@@ -104,8 +104,6 @@ def update_pic(name):
 @main.route('/like/<int:id>',methods = ['POST','GET'])
 @login_required
 def like(id):
-    categories = Blog.query.with_entities(Blog.category)
-    categories = [r for (r,) in categories]
     get_blogs = Upvote.get_upvotes(id)
     valid_string = f'{current_user.id}:{id}'
     for blog in get_blogs:
@@ -115,15 +113,13 @@ def like(id):
             return redirect(url_for('main.index',id=id))
         else:
             continue
-    new_vote = Upvote(user = current_user, blog_id=id, categories=categories)
+    new_vote = Upvote(user = current_user, blog_id=id)
     new_vote.save()
     return redirect(url_for('main.index',id=id))
 
 @main.route('/dislike/<int:id>',methods = ['POST','GET'])
 @login_required
 def dislike(id):
-    categories = Blog.query.with_entities(Blog.category)
-    categories = [r for (r,) in categories]
     blog = Downvote.get_downvotes(id)
     valid_string = f'{current_user.id}:{id}'
     for p in blog:
@@ -133,7 +129,7 @@ def dislike(id):
             return redirect(url_for('main.index',id=id))
         else:
             continue
-    new_downvote = Downvote(user = current_user, blog_id=id, categories=categories)
+    new_downvote = Downvote(user = current_user, blog_id=id)
     new_downvote.save()
     return redirect(url_for('main.index',id = id))
 

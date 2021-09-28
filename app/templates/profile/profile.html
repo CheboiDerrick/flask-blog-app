@@ -49,7 +49,7 @@
         {% for i in posts%}
         <div class="blogs">
             <h5>Title: {{i.title}}</h5>
-            <h6>{{i.post}}</h6>
+            <h6>{{i.post | truncate(70)}}</h6>
             <p>{{i.comment.count()}} Comments</p>
         </div>
          

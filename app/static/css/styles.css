@@ -52,6 +52,7 @@ body {
 .btn-default:hover {
   background-color: #8a716a;
   color: white;
+  margin-bottom: 2rem;
 }
 
 .card {
@@ -101,10 +102,10 @@ label {
 	 box-shadow: 0 2px 4px rgba(34, 34, 34, 0.12);
 	 position: relative;
 	 overflow: hidden;
-	 min-height: 120px;
+	 min-height: 80px;
 }
  .quote-card p {
-	 font-size: 22px;
+	 font-size: 16px;
 	 line-height: 1.5;
 	 margin: 0;
 	 max-width: 80%;
@@ -160,4 +161,16 @@ label {
 	 border-bottom-style: solid;
 	 opacity: 1;
 }
+
+.more {
+	opacity: 0.5 !important
+}
+
+.vl {
+	margin: 8px !important;
+	width: 2px;
+	border-right: 1px solid #aaaaaa;
+	height: 25px
+}
+
  
