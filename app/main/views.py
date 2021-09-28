@@ -5,7 +5,7 @@ from ..models import User,Blog,Comment,Upvote,Downvote
 from .forms import UpdateProfile,BlogForm,CommentForm
 from .. import db,photos
 from sqlalchemy import desc
-import markdown2
+from app.request import get_quotes
 
 
 @main.route('/')
@@ -13,9 +13,10 @@ def index():
     blogs = Blog.query.order_by(desc(Blog.time)).all()
     categories = Blog.query.with_entities(Blog.category)
     categories = [r for (r,) in categories]
+    quote=get_quotes()
     
     title='Blogs | Home'
-    return render_template('index.html', blogs = blogs, categories=categories, title=title)
+    return render_template('index.html', blogs = blogs, categories=categories, title=title, quote=quote)
 
 @main.route('/blogs/<category_name>')
 def category(category_name):
@@ -135,3 +136,4 @@ def dislike(id):
     new_downvote = Downvote(user = current_user, blog_id=id, categories=categories)
     new_downvote.save()
     return redirect(url_for('main.index',id = id))
+

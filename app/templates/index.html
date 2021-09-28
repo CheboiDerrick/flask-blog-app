@@ -9,7 +9,15 @@ super() }}
 {% block content %}
 
 <div class="container">
-  <h2 class="text-center" id="posts">Current Blogs</h2>
+  <blockquote class="quote-card">
+    <p>
+      {{quote.quote}} 
+    </p>
+
+    <cite>
+      {{quote.author}}
+    </cite>
+  </blockquote>
   
   <div class="tab-content">
     <div class="container tab-pane active" id="all">

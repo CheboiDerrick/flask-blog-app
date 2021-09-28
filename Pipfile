@@ -19,6 +19,7 @@ flask-uploads = "*"
 gunicorn = "*"
 flask-simplemde = "*"
 markdown2 = "*"
+requests = "*"
 
 [dev-packages]
 

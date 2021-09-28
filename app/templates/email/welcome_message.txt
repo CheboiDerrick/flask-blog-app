@@ -1,9 +1,9 @@
 Hello {{user.username}}
-Welcome to Flash Pitch.
+Welcome to My Word.
 
-Derrick here and  I am very happy to welcome you on board with Flash Pitch
-You joined hundreds of users who are already sharing their pitches with us on our platform. 
-It only takes 60 seconds for you to share your pitch with us.
+Derrick here and  I am very happy to welcome you on board with My Word
+You joined hundreds of users who are already sharing their beautiful stories with us on our platform. 
+
 
 Thank you and welcome.
 
